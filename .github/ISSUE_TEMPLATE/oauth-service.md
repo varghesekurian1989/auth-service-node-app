@@ -1,30 +1,45 @@
-# Title: Implement OAuth Service for Authentication
-### Description
+Feature: OAuth Service Authentication
 
-We need to add OAuth-based authentication to the application to allow users to log in using third-party services (e.g., Google, GitHub, etc.). This will improve user convenience and security by leveraging external identity providers.
-### Tasks
+  As a user,
+  I want to log in using third-party services (e.g., Google, GitHub),
+  So that I can authenticate easily and securely.
 
-    Research and choose an OAuth library (e.g., passport, openid-client).
-    Set up routes for OAuth login and callback.
-        /auth/:provider
-        /auth/:provider/callback
-    Configure OAuth providers (e.g., Google, GitHub).
-        Create OAuth credentials in provider dashboards.
-        Store keys securely using environment variables.
-    Implement JWT token generation after successful OAuth authentication.
-    Add middleware to verify user tokens.
-    Test the integration with multiple OAuth providers.
+  Background: 
+    Given the application is set up with OAuth authentication
 
-### Acceptance Criteria
+  Scenario: User logs in with Google OAuth
+    Given the user navigates to the login page
+    When the user clicks on "Login with Google"
+    And the user is redirected to the Google OAuth provider
+    And the user grants permission to the application
+    Then the user should be redirected back to the application
+    And a valid JWT token should be generated
+    And the user should be logged in
 
-    Users can log in using at least one OAuth provider (e.g., Google).
-    Tokens are securely generated and returned after login.
-    Middleware correctly validates tokens for protected routes.
-    Integration is tested for edge cases and error handling.
+  Scenario: User logs in with GitHub OAuth
+    Given the user navigates to the login page
+    When the user clicks on "Login with GitHub"
+    And the user is redirected to the GitHub OAuth provider
+    And the user grants permission to the application
+    Then the user should be redirected back to the application
+    And a valid JWT token should be generated
+    And the user should be logged in
 
-### Resources
+  Scenario: User tries to access a protected route without logging in
+    Given the user has not logged in
+    When the user tries to access a protected route
+    Then the user should be redirected to the login page
 
-    Passport.js Documentation
-    Google OAuth Developer Guide
-    GitHub OAuth Documentation
+  Scenario: Token validation middleware works correctly
+    Given the user is logged in
+    When the user accesses a protected route
+    Then the middleware should validate the JWT token
+    And the user should be allowed to access the route
+
+  Scenario: Handling OAuth errors
+    Given the user clicks on "Login with Google"
+    When the user is redirected to the Google OAuth provider
+    And the user denies the permission
+    Then the user should see an error message saying "Authentication failed"
+    And the user should be redirected to the login page
 
