@@ -1,4 +1,4 @@
-Feature: OAuth Service Authentication
+### Feature: OAuth Service Authentication
 
   As a user,
   I want to log in using third-party services (e.g., Google, GitHub),
@@ -7,7 +7,7 @@ Feature: OAuth Service Authentication
   Background: 
     Given the application is set up with OAuth authentication
 
-  Scenario: User logs in with Google OAuth
+  **Scenario: User logs in with Google OAuth
     Given the user navigates to the login page
     When the user clicks on "Login with Google"
     And the user is redirected to the Google OAuth provider
@@ -16,7 +16,7 @@ Feature: OAuth Service Authentication
     And a valid JWT token should be generated
     And the user should be logged in
 
-  Scenario: User logs in with GitHub OAuth
+  **Scenario: User logs in with GitHub OAuth
     Given the user navigates to the login page
     When the user clicks on "Login with GitHub"
     And the user is redirected to the GitHub OAuth provider
@@ -25,7 +25,7 @@ Feature: OAuth Service Authentication
     And a valid JWT token should be generated
     And the user should be logged in
 
-  Scenario: User tries to access a protected route without logging in
+  **Scenario: User tries to access a protected route without logging in
     Given the user has not logged in
     When the user tries to access a protected route
     Then the user should be redirected to the login page
