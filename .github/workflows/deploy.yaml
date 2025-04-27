@@ -1,0 +1,7 @@
+name: Infra test pipline
+on: [workflow_dispatch]
+jobs:
+   dev-test:
+      runs-on: ubunut-latest
+      steps: 
+        run: echo test
